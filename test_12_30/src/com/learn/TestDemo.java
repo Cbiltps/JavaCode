@@ -42,8 +42,9 @@ package com.learn;
 
 class Animal {
     //动物的名字和年龄都是共有的！
-    public String name;
+    public String name = "动物";
     public int age;
+    protected int count;
 
     public Animal(String name,int age) {
         this.name = name;
@@ -63,16 +64,41 @@ class Dog extends Animal {
     }
 }
 
-//下面是错误的对照
+//这段代码是错误的对照
 //class Bird extends Animal {
 //    public String wing;
 //
 //    public void fly() {
-//        System.out.println(name+"fly()"+age);
+//        System.out.println(name + "fly()" + age);
 //    }
 //}
 
+class Bird extends Animal {
+    public String wing;
+    public String name;//null
+
+    public Bird(String name, int age, String wing) {
+        super(name, age);
+        this.wing = wing;
+    }
+
+    public void fly() {
+        System.out.println(super.name + "fly()");
+    }
+}
+
 
 public class TestDemo {
+    public static void main(String[] args) {
+//        Dog dog = new Dog("哈士奇",19);
+//        System.out.println(dog.name);
+//        dog.eat();
 
+        Bird bird = new Bird("喜鹊",18,"我要的飞翔");
+        System.out.println(bird.name);
+//        bird.eat();
+        bird.fly();
+
+        System.out.println(bird.count);
+    }
 }
