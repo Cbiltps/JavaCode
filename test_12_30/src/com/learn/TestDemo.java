@@ -89,6 +89,7 @@ class Bird extends Animal {
 
 
 public class TestDemo {
+
     public static void main(String[] args) {
 //        Dog dog = new Dog("哈士奇",19);
 //        System.out.println(dog.name);
