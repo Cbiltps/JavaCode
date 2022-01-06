@@ -11,7 +11,7 @@ class Animal {
     }
 
     public void eat() {
-        System.out.println(name+"eat()");
+        System.out.println(name+" eat()");
     }
 }
 
@@ -24,11 +24,23 @@ class Dog extends Animal {
     public void eat() {
         System.out.println(name+"crazy eat()");
     }
+
+    public void func(int a) {
+        System.out.println("int");
+    }
+
+    public void func(int a,int b) {
+        System.out.println("int,int");
+    }
+
+    public void func(int a,int b,int c) {
+        System.out.println("int,int");
+    }
 }
 
 class Bird extends Animal {
     public String wing;
-    public String name;//null
+    public String name = "鸟类";
 
     public Bird(String name, int age, String wing) {
         super(name, age);
@@ -42,10 +54,25 @@ class Bird extends Animal {
 
 public class TestDemo2 {
 
-    //此时发生了 动态绑定
     public static void main(String[] args) {
-        Animal animal = new Dog("旺财",23);//向上转型   父类引用 引用 子类对象
-        animal.eat();
+        Dog dog = new Dog("haha",19);
+        dog.func(10);
+    }
+
+    //此时发生了 动态绑定
+    public static void main2(String[] args) {
+//        Animal animal = new Dog("旺财",23);//向上转型   父类引用 引用 子类对象
+//        animal.eat();
+
+        Animal animal2 = new Bird("wuya",12,"wuya fly!");
+        animal2.eat();//可以调用eat方法
+
+        System.out.println(animal2.name);//这里其实访问的是父类的name
+
+//        System.out.println(animal2.wing); 无法访问的
+//        因为animal的类型是Animal类型
+//        意思就是：通过父类引用，只能访问父类自己的成员！
+
     }
 
     public static void func(Animal animals) {
