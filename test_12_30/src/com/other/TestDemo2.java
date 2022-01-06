@@ -6,6 +6,7 @@ class Animal {
     protected int count;
 
     public Animal(String name,int age) {
+        eat();//在父类中调用父类和子类重写的eat方法，也会发生所谓的动态绑定！
         this.name = name;
         this.age = age;
     }
@@ -55,6 +56,34 @@ class Bird extends Animal {
 public class TestDemo2 {
 
     public static void main(String[] args) {
+        Dog dog = new Dog("wawa",23);
+    }
+
+    public static void main6(String[] args) {
+        Animal animal4 = new Dog("aa",23);
+//        Bird bird = (Bird)animal4;//这里就会报 类型转换异常
+//        bird.fly();
+
+        if (animal4 instanceof Bird) { //这里if语句没进来
+            Bird bird = (Bird)animal4;//这里就会报 类型转换异常
+            bird.fly();
+        }
+        //运行之后就是什么都没有
+    }
+
+    public static void main5(String[] args) {
+        Animal animal3 = new Bird("lala",12,"flyyyyy");
+        Bird bird = (Bird)animal3;//强行转换
+        bird.fly();//这里可以调用fly方法
+
+        //在这里不建议这样写，有的时候是错的（不是非常的安全）！
+        //因为不是所有的动物都是鸟，逻辑上就是颠覆认知的！
+
+        //你可以向下转型;
+        //前提是：这个引用(animal3) 引用了 你将要向下转型的这个对象(bird)!
+    }
+
+    public static void main4(String[] args) {
         Dog dog = new Dog("haha",19);
         dog.func(10);
     }
