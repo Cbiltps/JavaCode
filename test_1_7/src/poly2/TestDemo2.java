@@ -1,4 +1,4 @@
-package demo1;
+package poly2;
 
 /*abstract class Shape {
     //public int a;
