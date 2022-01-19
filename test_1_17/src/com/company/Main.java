@@ -38,7 +38,7 @@ public class Main {
         System.out.println(str1 == str2);
     }
 
-    public static void main6(String[] args) {
+    public static void main(String[] args) {
         String str1 = "hello";
         String str2 = "he"+"llo";//此时 他两都是常量，编译的时候，就已经确定好了是"hello"
         String str3 = "he";
@@ -46,27 +46,38 @@ public class Main {
         System.out.println(str1 == str4);
     }
 
-    public static void main5(String[] args) {
+    /*public static void main(String[] args) {
         String str1 = "hello";
         String str2 = "hello";
         System.out.println(str1 == str2);
+        *//*这里肯定就是true了 记得写博客的时候也画一个图!*//*
 
-    }
+    }*/
 
-    public static void main4(String[] args) {
+    /*public static void main4(String[] args) {
         String str1 = "hello";
         String str2 = new String("hello");
         System.out.println(str1 == str2);
-        /*其实这里比较的不是内容，而是地址！ 地址不一样，运行的结果就是false！*/
+        *//*其实这里比较的不是内容，而是地址！ 地址不一样，运行的结果就是false！*//*
 
-        /*然后下面做一点铺垫（涉及到JVM的知识）：
-        * class文件常量池：
-        * 运行时常量池：
-        * 字符串常量池：
+        *//*然后下面做一点铺垫（涉及到JVM的知识）：
+        * Class文件常量池：Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量
+        * 池表（Constant Pool Table），用于存放编译期生成的各种字面量与符号引用，这部分内容将在类加
+        * 载后存放到方法区的运行时常量池中。
         *
+        * 运行时常量池：当程序把编译好的字节码文件加载到JVM当中后，会生成一个运行时常量池（在方法区，就是从磁盘到内存），
+        * Class文件常量池会变成运行时常量池。
         *
-        * */
-    }
+        * 字符串常量池：本质是一个哈希表（StringTable），JDK1.8开始放在了堆里面，里面存的是驻留字符串的引用，
+        * 在堆中的字符串实例被这个哈希表引用之后就等同被赋予了”驻留字符串”的身份，
+        * 在JVM中字符串常量池被所有类共享。
+        *
+        * 什么是哈希表:其实就是一个数据结构，描述和组织数据的一种方式，非常的块！
+        *
+        * 写文章的时候记得画图！！！
+        *
+        * *//*
+    }*/
 
 
 
