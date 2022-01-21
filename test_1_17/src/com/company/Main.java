@@ -4,7 +4,25 @@ import java.util.Arrays;
 
 public class Main {
 
+    public static void func(String s) {
+        if (s == null || s.length() == 0) { //如果条件换过来就是错的！
+
+        }
+        /*if (s.length() == 0 || s == null) {
+            *//*这里有可能会出现问题，s为空的时候就没有长度，所以有时候会出现问题！*//*
+        }*/
+
+        /*在Java中也有断言的！*/
+        assert s != null;
+    }
+
     public static void main(String[] args) {
+        func(null);//这里没有报错？
+        // 注意一下，idea要设置一下的！自己百度！
+        //因为这个东西用的不是特别多！
+    }
+
+   /* public static void main(String[] args) {
         //数组的整体赋值 只有1次机会 就是在定义的时候
         final int[] array = {1,2,3,4,5};
         //array = new int[]{4,5,6,7};
@@ -12,7 +30,7 @@ public class Main {
         String str2 = "";//str2这个引用 指向的字符串是空的
         System.out.println(str2.length());
 
-    }
+    }*/
 
 
   /*  public static void main(String[] args) {
