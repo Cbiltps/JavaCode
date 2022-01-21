@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Main {
 
-    public static void main121(String[] args) {
+    public static void main(String[] args) {
         //数组的整体赋值 只有1次机会 就是在定义的时候
         final int[] array = {1,2,3,4,5};
         //array = new int[]{4,5,6,7};
@@ -13,38 +13,56 @@ public class Main {
         System.out.println(str2.length());
 
     }
-    public static void main10(String[] args) {
-        String str1 = null;
-        String str2 = "11";//反射修改
-        System.out.println(str2.equals(str1));
-    }
 
-    public static void main9(String[] args) {
+
+  /*  public static void main(String[] args) {
+        String str1 = null;
+        *//*使用equals的时候要注意：一定要预防空指针异常！*//*
+        String str2 = "11";//如果想要修改的话，就必须通过反射修改
+//        System.out.println(str1.equals(str2));//这样子就是空指针异常
+        System.out.println(str2.equals(str1));//这里的str2不是空指针，就不会报错的
+    }*/
+
+
+ /*   public static void main(String[] args) {
         String str1 = "11";
         String str2 = new String("1")+new String("1");
-        str2.intern();//手动入池-》当字符串常量池 没有的时候，就会入池
+        str2.intern();//手动入池-》当字符串常量池 没有的时候，才会入池
         System.out.println(str1 == str2);
         System.out.println(str1.equals(str2));
-    }
-    public static void main8(String[] args) {
+
+
+        *//*注意课件上的是比较浅的，写博客的时候去看笔记！*//*
+    }*/
+
+/*
+    public static void main(String[] args) {
         String str2 = new String("1")+new String("1");
         str2.intern();//手动入池
         String str1 = "11";
         System.out.println(str1 == str2);
-    }
-    public static void main7(String[] args) {
-        String str1 = "11";
-        String str2 = new String("1")+new String("1");
-        System.out.println(str1 == str2);
-    }
+    }*/
 
-    public static void main(String[] args) {
+
+    /*public static void main(String[] args) {
+        String str1 = "11";
+        String str2 = new String("1") + new String("1");//这里创建的对象是StringBuilder对象!
+        System.out.println(str1 == str2);
+        System.out.println(str2);
+        底层的实现是这样的！看图！
+        画图非常重要的！
+        StringBuilder
+    }*/
+
+   /* public static void main(String[] args) {
         String str1 = "hello";
         String str2 = "he"+"llo";//此时 他两都是常量，编译的时候，就已经确定好了是"hello"
         String str3 = "he";
-        String str4 = str3+"llo";//此时str3是一个变量-》编译的时候，不知道是啥？
+        String str4 = str3+"llo";//此时str3是一个变量 -》编译的时候，不知道是啥？ str4不是一个完整的对象！
+        *//*拼接的hello并不是在常量池里面，拼接的是一个单独的对象！*//*
         System.out.println(str1 == str4);
-    }
+    }*/
+
 
     /*public static void main(String[] args) {
         String str1 = "hello";
