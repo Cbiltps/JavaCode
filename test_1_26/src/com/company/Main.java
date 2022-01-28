@@ -8,7 +8,17 @@ import java.util.Arrays;
 
 public class Main {
 
+
     public static void main(String[] args) {
+        String str = "Java30 12&21#hello";
+        String[] strings = str.split(" |&|#");//如果一个字符串中有多个分隔符，可以用"|"作为连字符
+        for (String s:strings) {
+            System.out.println(s);
+        }
+    }
+
+
+    public static void main8(String[] args) {
         /*字符串拆分*/
         String str = "name=zhangsan&age=19";
         String[] strings = str.split("&");//以 &符号 分割
