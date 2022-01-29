@@ -5,11 +5,77 @@ package com.company;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Main {
 
-
     public static void main(String[] args) {
+        StringBuilder stringBuilder = new StringBuilder();
+//        StringBuilder stringBuilder = new StringBuilder("abcdef");
+        stringBuilder.append("abcdef");//这样写也是可以的
+        stringBuilder.append("123123");//还可以添加
+//        stringBuilder.append("123").append("456");//甚至是这样连用也是可以的
+        System.out.println(stringBuilder);
+        /*注意到这里的时候 就一定要点开里面的源代码看看到底是如何实现的！
+        * 其实就是 打印的时候对调用toString方法，new一个新的String，底层就是这样实现的！
+        * 还有它永远返回的都是原来的对象，不会创建新的对象！*/
+    }
+
+    public static void main13(String[] args) {
+        String str = "";
+        String ret = str.concat("bit");//这里拼接的结果不入池
+        System.out.println(ret);
+
+        System.out.println(str.length());//这里是一个方法
+        int[] array = {1,2,3,4,5};
+        System.out.println(array.length);//这里的长度是属性
+        //Java里面的数组非常特殊，机制很多
+
+        System.out.println(str.isEmpty());//判断字符串是否为空，说的是长度
+    }
+
+
+    public static void main12(String[] args) {
+        String str = "abcdefBFRG123高";
+        String ret = str.toLowerCase();//转小写
+        String ret2 = str.toUpperCase();//转大写
+        System.out.println(ret);
+        System.out.println(ret2);
+        //StringBuffer sb = "fafa";
+    }
+
+    public static void main11(String[] args) {
+        String str = "    abc     defg     ";
+        String ret = str.trim();//去除字符串左右的空格
+        System.out.print(ret);
+        System.out.println("===");
+    }
+
+    public static void main10(String[] args) {
+        String str = "abcdefgh";
+        String sub = str.substring(2);//从2号位置开始提取子串
+        String sub2 = str.substring(2,4);//提取子串
+        /*注意：java中的是左闭右开的，所以上面选择位置的时候位置4是不选取的！*/
+        /*点进去看一看看源代码！*/
+        System.out.println(sub);
+        System.out.println(sub2);
+
+       //这个是一个参数的方法，另一个自己看
+       /* public String substring(int beginIndex) {
+            if (beginIndex < 0) {
+                throw new StringIndexOutOfBoundsException(beginIndex);
+            }
+            int subLen = value.length - beginIndex;
+            if (subLen < 0) {
+                throw new StringIndexOutOfBoundsException(subLen);
+            }
+            return (beginIndex == 0) ? this : new String(value, beginIndex, subLen);
+            //如果位置等于0，就不会产生新的对象！
+        }*/
+    }
+
+
+    public static void main9(String[] args) {
         String str = "Java30 12&21#hello";
         String[] strings = str.split(" |&|#");//如果一个字符串中有多个分隔符，可以用"|"作为连字符
         for (String s:strings) {
