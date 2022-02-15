@@ -20,7 +20,6 @@ public class TestDemo {
         System.out.println(str);
     }
 
-
     /*public static void main(String[] args) {
         *//*效率低！会产生很多的对象！*//*
         *//*字符串的拼接会被优化为StringBuilder对象！*//*
