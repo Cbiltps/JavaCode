@@ -66,3 +66,51 @@ public class Main {
 //        System.out.println(str1.equals(str2));//这样子就是空指针异常
         System.out.println(str2.equals(str1));//这里的str2不是空指针，就不会报错的
     }*/
+
+//public class Solution {
+//    public int Fibonacci(int n) {
+//        if(n == 0){
+//            return 0;
+//        }
+//        int first = 1;
+//        int second = 1;
+//        int third = 1; //因为从0开始，third等于n就不用判定了
+//        while(n > 2){
+//            third = first + second;
+//            first = second;
+//            second = third;
+//            --n;
+//        }
+//        return third;
+//    }
+//}
+
+/*
+import java.util.HashMap;
+import java.util.Map;
+
+public class Solution {
+    private Map<Integer, Integer> filter = new HashMap<>();
+    public int Fibonacci(int n) {
+        if(n == 0 || n == 1){
+            return n;
+        }
+        int pre = 0;
+        if(filter.containsKey(n-1)){
+            pre = filter.get(n-1);
+        }
+        else{
+            pre = Fibonacci(n-1);
+            filter.put(n-1, pre);
+        }
+        int ppre = 0;
+        if(filter.containsKey(n-2)){
+            ppre = filter.get(n-2);
+        }
+        else{
+            ppre = Fibonacci(n-2);
+            filter.put(n-2, ppre);
+        }
+        return pre + ppre;
+    }
+}*/
