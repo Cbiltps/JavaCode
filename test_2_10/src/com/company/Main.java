@@ -5,18 +5,76 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void func(int n) {
+    /**
+     * 这是一个注意点 关于finally：尽量避免在finally中写return语句
+     * 这样的话你就不知道返回的是 a 还是 20 了。
+     * @return
+     */
+    public static int func() {
+        int a = 10;
         try {
-            System.out.println(10/n);
-        } catch (ArithmeticException e) {
+            //System.out.println(10/0);
+            return a;
+        }catch (ArithmeticException e) {
             e.printStackTrace();
+        }finally {
+            return 20;// 这里是返回20的
         }
-
-//        System.out.println(10/n);
     }
 
     public static void main(String[] args) {
-        func(0);
+        System.out.println(func());
+    }
+
+   /* public static void func2(int n) throws ArithmeticException{
+        try {
+            System.out.println(10/n);
+        }catch (ArithmeticException e) {
+            System.out.println("func2()");
+            e.printStackTrace();
+        }
+        // System.out.println(10/n);
+    }
+
+    public static void main(String[] args) {
+        try {
+            func2(0);
+        }catch (ArithmeticException e) {
+            e.printStackTrace();
+            System.out.println("main()");
+        }
+        System.out.println("ffsad");
+    }*/
+
+    /**
+     * 如果本方法中没有合适的处理异常的方式, 就会沿着调用栈向上传递
+     * @param n
+     * @throws ArithmeticException
+     */
+    public static void func(int n) throws ArithmeticException { // throws一下 告诉调用者会有异常
+      try { // 这个和下面main函数的try都是一样的，效果就是双重保险
+            System.out.println(10/n);
+        } catch (ArithmeticException e) {
+          e.printStackTrace();
+          System.out.println("方法内处理异常");
+        }
+//        System.out.println(10/n);
+    }
+
+    /**
+     * 如果向上一直传递都没有合适的方法处理异常, 最终就会交给 JVM 处理, 程序就会异常终止
+     * 和我们最开始使用 try catch 时是一样的!
+     * @param args
+     */
+    public static void main9(String[] args) {
+        // 假如你知道这个函数会有异常
+        try {
+            func(0);
+        } catch (ArithmeticException e) {
+            e.printStackTrace();// 这个时候运行的时候就是交给JVM了
+            System.out.println("main内处理");
+        }
+        System.out.println("检测执行执行完毕");
     }
 
     public static void main8(String[] args) { // 这就是把资源放进try里面了
