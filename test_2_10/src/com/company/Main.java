@@ -1,16 +1,81 @@
 package com.company;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/*注意：写博客的时候一定要顺一遍课件！
+* 不仅仅是看课件，还要看博哥的笔记！
+* 代码是不用看的，因为上课的时候会把代码写一遍：相当于是流程！*/
+
 public class Main {
+
+    /**
+     * 举例一个受查异常
+     * 学到的东西：ALT+ENTER可以快速的修改代码
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(readFile2());
+    }
+
+    public static String readFile2() {
+        // 尝试打开文件, 并读其中的一行.
+        File file = new File("d:/test.txt");
+        // 使用文件对象构造 Scanner 对象.
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) { // 受查异常
+            e.printStackTrace();
+        }
+        return sc.nextLine();
+    }
+
+
+    /**
+     * 举例一个受查异常 上面的写法才是好的
+     * @param args
+     * @throws FileNotFoundException
+     */
+    public static void main12(String[] args) throws FileNotFoundException { // 这样的写法就是抛出异常，交给上级去处理
+        System.out.println(readFile());
+    }
+    public static String readFile() throws FileNotFoundException {
+        // 尝试打开文件, 并读其中的一行.
+        File file = new File("d:/test.txt");
+        // 使用文件对象构造 Scanner 对象.
+        Scanner sc = new Scanner(file);// 这里就会发生异常，万一检测不到这个文件
+        return sc.nextLine();
+    }
+
+
+    /**
+     * 自定义异常
+     * @param x
+     * @throws ArithmeticException
+     */
+    public static void func3(int x) throws ArithmeticException { // 声明抛出异常的种类
+        if(x == 0) {
+            throw new ArithmeticException("除以零异常");// 抛出自定义的异常
+        }
+    }
+
+    public static void main11(String[] args) {
+        try {
+            func3(0);
+        }catch (ArithmeticException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 这是一个注意点 关于finally：尽量避免在finally中写return语句
      * 这样的话你就不知道返回的是 a 还是 20 了。
      * @return
      */
-    public static int func() {
+    public static int func2() {
         int a = 10;
         try {
             //System.out.println(10/0);
@@ -22,10 +87,15 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(func());
+    public static void main10(String[] args) {
+        System.out.println(func2());
     }
 
+
+
+
+
+    /*下面注释的代码时用来的检测的代码 没有实际的意义！*/
    /* public static void func2(int n) throws ArithmeticException{
         try {
             System.out.println(10/n);
@@ -45,6 +115,9 @@ public class Main {
         }
         System.out.println("ffsad");
     }*/
+
+
+
 
     /**
      * 如果本方法中没有合适的处理异常的方式, 就会沿着调用栈向上传递
