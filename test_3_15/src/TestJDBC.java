@@ -65,6 +65,5 @@ public class TestJDBC {
          */
         statement.close();
         connection.close();
-
     }
 }
