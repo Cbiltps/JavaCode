@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+// JDBC其实就是一组类和接口，可以统一数据库的相关操作！
 public class TestJDBC {
     public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
@@ -61,7 +62,7 @@ public class TestJDBC {
         System.out.println(ret);
 
         /**
-         * 第五步：此时 SQL 已经执行完毕. 然后还需要释放资源
+         * 第五步：此时 SQL 已经执行完毕. 然后还需要释放资源，防止资源耗尽或者是后序的其他程序无法建立连接
          */
         statement.close();
         connection.close();
