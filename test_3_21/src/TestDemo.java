@@ -22,6 +22,7 @@ public class TestDemo {
             return total[num] + total[num-1] + total[num+1];
         }
     }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
