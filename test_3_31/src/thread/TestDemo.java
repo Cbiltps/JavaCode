@@ -1,5 +1,8 @@
 package thread;
 
+/**
+ * 通过让一变量自增多次体现单线程和多线程的效率
+ */
 public class TestDemo {
     private static final long count = 10_0000_0000L;
 

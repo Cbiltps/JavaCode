@@ -1,5 +1,8 @@
 package thread;
 
+/**
+ * 中断线程 Thread内置的标志位来控制线程是否执行
+ */
 public class TestDemo5 {
     public static void main(String[] args) {
         Thread t = new Thread(() -> {
