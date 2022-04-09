@@ -1,7 +1,7 @@
-public class TestDemo {
-    /*状态是PCB上的一个属性！
-    * 在Java里面，尤其是Thread类里面，对于线程的状态有了进一步的细化！*/
+ /*状态是PCB上的一个属性！
+  * 在Java里面，尤其是Thread类里面，对于线程的状态有了进一步的细化！*/
 
+public class TestDemo {
     /**
      * 获取指定线程的状态 NEW状态
      * @param args

@@ -1,10 +1,20 @@
+/**
+ * 利用 synchronized加锁解决 多个线程对同一个变量进行修改操作
+ */
 class Counter {
     // 这个 变量 就是两个线程要去自增的变量
     volatile public int count;
 
     // java中解决线程安全的典型手段就是 加锁
-    synchronized public void increase() { // 这里加锁之后就是1_0000，不加就是5000和1_之间
+    /*synchronized public void increase() { // 这里加锁之后就是1_0000，不加就是5000和1_之间
         count++;
+    }*/
+
+    // 这样写是java特有的写法，写法简单，理解难
+    public void increase() {
+        synchronized (this) {
+            count++;
+        }
     }
 }
 
@@ -17,11 +27,13 @@ public class TestDemo2 {
                 counter.increase();
             }
         });
+
         Thread t2 = new Thread(() -> {
             for (int i = 0; i < 50000; i++) {
                 counter.increase();
             }
         });
+
         t1.start();
         t2.start();
 
