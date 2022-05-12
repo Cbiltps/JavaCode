@@ -1,13 +1,19 @@
-package network;
+package network.echoserver;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
 /**
  * 写一个最简单的客户端服务器程序，回显服务~ EchoServer
+ *
+ * 站在服务器的角度:
+ * 1. 源 IP: 服务器程序本机的 IP
+ * 2. 源端口: 服务器绑定的端口 (此处手动指定了 9090)
+ * 3. 目的 IP: 包含在收到的数据报中. (客户端的IP)
+ * 4. 目的端口: 包含在收到的数据报中. (客户端的端口)
+ * 5. 协议类型: UDP
  */
 public class UdpEchoServer {
     // 进行网络编程, 第一步就需要先准备好 socket 实例~ 这是进行网络编程的大前提.
@@ -33,6 +39,11 @@ public class UdpEchoServer {
             String response = process(request);
 
             // 3. 把响应写回客户端
+            DatagramPacket responsePacket = new DatagramPacket(response.getBytes(), response.getBytes().length,
+                    requestSocket.getSocketAddress());
+            socket.send(responsePacket);
+            System.out.printf("address:%s port:%d request:%s response:%s\n", requestSocket.getAddress().toString(),
+                    requestSocket.getPort(), request, response);
 
         }
     }
@@ -47,5 +58,8 @@ public class UdpEchoServer {
         return  request;
     }
 
-
+    public static void main(String[] args) throws IOException {
+        UdpEchoServer udpEchoServer = new UdpEchoServer(9090);
+        udpEchoServer.start();
+    }
 }
