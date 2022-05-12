@@ -54,7 +54,7 @@ public class UdpEchoServer {
      * @param request
      * @return
      */
-    private String process(String request) {
+    public String process(String request) {
         return  request;
     }
 
