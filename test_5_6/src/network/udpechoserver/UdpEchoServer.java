@@ -1,4 +1,4 @@
-package network.echoserver;
+package network.udpechoserver;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

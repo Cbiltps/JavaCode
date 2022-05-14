@@ -1,6 +1,6 @@
 package network.dictserver;
 
-import network.echoserver.UdpEchoServer;
+import network.udpechoserver.UdpEchoServer;
 
 import java.io.IOException;
 import java.net.SocketException;
