@@ -1,4 +1,4 @@
-package network.tcpechoserver;
+package network.threadtcpechoserver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,14 +8,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-
-public class TcpEchoServer {
-    // listen => 英文原意 监听~~
-    // 但是在 Java socket 中是体现不出来 "监听" 的含义的~~
-    // 之所以这么叫, 其实是 操作系统原生的 API 里有一个操作叫做 listen
+public class TestThreadTcpEchoServer {
     public ServerSocket listenSocket = null;
 
-    public TcpEchoServer(int port) throws IOException {
+    public TestThreadTcpEchoServer(int port) throws IOException {
         listenSocket = new ServerSocket(port);
     }
 
@@ -27,7 +23,11 @@ public class TcpEchoServer {
             // accept 返回了 一个 socket 对象, 称为 clientSocket. 后续和客户端之间的沟通, 都是通过 clientSocket 来完成的.
             // 进一步讲, serverSocket 就干了一件事, 接电话~~
             Socket clientSocket = listenSocket.accept();
-            processConnection(clientSocket);
+            // [改进方法] 在这个地方, 每次 accept 成功, 都创建一个新的线程, 由新线程负责执行这个 processConnection 方法~
+            Thread t = new Thread(() -> {
+                processConnection(clientSocket);
+            });
+            t.start();
         }
     }
 
@@ -83,7 +83,7 @@ public class TcpEchoServer {
     }
 
     public static void main(String[] args) throws IOException {
-        TcpEchoServer tcpEchoServer = new TcpEchoServer(9090);
-        tcpEchoServer.start();
+        TestThreadTcpEchoServer testThreadTcpEchoServer = new TestThreadTcpEchoServer(9090);
+        testThreadTcpEchoServer.start();
     }
 }
