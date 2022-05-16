@@ -63,7 +63,6 @@ public class TcpEchoServer {
 
                     System.out.printf("IP:%s Port:%d request:%s response:%s\n", clientSocket.getInetAddress(),
                             clientSocket.getPort(), request, response);
-
                 }
             }
         } catch (IOException e) {

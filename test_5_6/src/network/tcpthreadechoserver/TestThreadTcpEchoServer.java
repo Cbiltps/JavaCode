@@ -1,4 +1,4 @@
-package network.threadtcpechoserver;
+package network.tcpthreadechoserver;
 
 import java.io.IOException;
 import java.io.InputStream;

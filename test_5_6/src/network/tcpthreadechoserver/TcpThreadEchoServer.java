@@ -1,13 +1,13 @@
-package network.threadtcpechoserver;
+package network.tcpthreadechoserver;
 
 import network.tcpechoserver.TcpEchoServer;
 
 import java.io.IOException;
 import java.net.Socket;
 
-public class ThreadTcpEchoServer extends TcpEchoServer {
+public class TcpThreadEchoServer extends TcpEchoServer {
 
-    public ThreadTcpEchoServer(int port) throws IOException {
+    public TcpThreadEchoServer(int port) throws IOException {
         super(port);
     }
 
@@ -25,7 +25,7 @@ public class ThreadTcpEchoServer extends TcpEchoServer {
     }
 
     public static void main(String[] args) throws IOException {
-        ThreadTcpEchoServer threadTcpEchoServer = new ThreadTcpEchoServer(9090);
+        TcpThreadEchoServer threadTcpEchoServer = new TcpThreadEchoServer(9090);
         threadTcpEchoServer.start();
     }
 }

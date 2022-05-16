@@ -1,15 +1,14 @@
 package network.dictserver;
 
-import network.udpechoserver.UdpEchoServer;
+import network.tcpthreadechoserver.TcpThreadPoolEchoServer;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.HashMap;
 
-public class UdpDictServer extends UdpEchoServer {
-    private HashMap<String, String> dict = new HashMap<>();
+public class TcpDictServer extends TcpThreadPoolEchoServer {
+    private HashMap<String, String> dict= new HashMap<>();
 
-    public UdpDictServer(int port) throws SocketException {
+    public TcpDictServer(int port) throws IOException {
         super(port);
 
         // 简单构造几个词
@@ -25,7 +24,7 @@ public class UdpDictServer extends UdpEchoServer {
     }
 
     public static void main(String[] args) throws IOException {
-        UdpDictServer udpDictServer = new UdpDictServer(9090);
-        udpDictServer.start();
+        TcpDictServer tcpDictServer = new TcpDictServer(9090);
+        tcpDictServer.start();
     }
 }
