@@ -21,6 +21,14 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.4.2</version>
+        </dependency>
+
     </dependencies>
 
     <!-- 打的包是一个 war 包. 默认是 jar 包   -->

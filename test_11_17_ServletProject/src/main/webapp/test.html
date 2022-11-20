@@ -2,20 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>这个是一个静态页面</title>
 </head>
 <body>
+    <input type="text" id="userId">
+    <input type="text" id="classId">
+    <input type="button" value="提交" id="submit">
+
+    <!-- <form action="postGetParameter" method="post">
+        <input type="text" name="userId">
+        <input type="text" name="classId">
+        <input type="submit" value="提交">
+    </form> -->
+    
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
     <script>
         // 通过ajax构造HTTP请求
-        $.ajax({
-            type: 'post',
-            url: 'method',
-            success: function(body) {
-                console.log(body);
-            }
-        });
+        // $.ajax({
+        //     type: 'post',
+        //     url: 'method',
+        //     success: function(body) {
+        //         console.log(body);
+        //     }
+        // });
+
+        let userIdInput = document.querySelector('#userId');
+        let classIdInput = document.querySelector('#classId');
+        let button = document.querySelector('#submit');
+        button.onclick = function() {
+            $.ajax({
+                type: 'post',
+                url: 'postJson',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    userId: userIdInput.value,
+                    classId: classIdInput.value
+                }),
+                success: function(body) {
+                    console.log(body);
+                }
+            });
+        }
     </script>
 </body>
 </html>
