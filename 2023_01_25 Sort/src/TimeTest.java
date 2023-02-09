@@ -24,8 +24,8 @@ public class TimeTest {
 //        TestSort.insertSort(array);
 //        TestSort.shellSort(array);
 //        TestSort.selectSort(array);
-        TestSort.heapSort(array);
-//        TestSort.quickSort(array);
+//        TestSort.heapSort(array);
+        TestSort.quickSort(array);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
@@ -44,14 +44,26 @@ public class TimeTest {
 //        TestSort.insertSort(array);
 //        TestSort.shellSort(array);
 //        TestSort.selectSort(array);
-        TestSort.heapSort(array);
-//        TestSort.quickSort(array);
+//        TestSort.heapSort(array);
+
+        /**
+         * 数据为100_0000的时候, 直接进行测试, 会发生栈溢出问题!
+         *
+         * 难道计算机的栈空间很小吗? 数据仅仅100_0000条!
+         *     其实不是的, 开辟栈空间其大小是不确定的, 一般是1M或者2M;
+         *     IDEA开辟空间的时候是有一个默认的大小的, 并且可以设置!
+         *
+         * 得出原因: 数据是有序的, 并且只有左子树或者右子树, 深度非常深, 递归次数太多, 超多当前栈空间!
+         *     而且看的不仅仅是数据的大小, 而是栈帧的大小, 包括函数的其他信息和参数等!
+         *
+         * 所以, 快速排序要进行下一步优化!
+         */
+        TestSort.quickSort(array);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
-
     public static void main(String[] args) {
-        test1(10_0000);
-        test2(10_0000);
+        test1(100_0000);
+//        test2(10_0000);
     }
 }

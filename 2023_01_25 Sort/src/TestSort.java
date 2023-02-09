@@ -212,7 +212,7 @@ public class TestSort {
     }
 
     /**
-     * 冒泡排序
+     * 冒泡排序(优化后)
      * 时间复杂度：有序O(n) ~ 逆序O(N^2)
      * 空间复杂度：O(1)
      * 稳定性：稳定的排序
@@ -233,13 +233,115 @@ public class TestSort {
         }
     }
 
+    /**
+     * 时间复杂度：
+     *     最好【每次可以均匀的分割待排序序列】：O(N*logn)
+     *     最坏：数据有序 或者逆序的情况 O(N^2)
+     * 空间复杂度：
+     *     最好：O(logn)
+     *     最坏：O(n) 只有左子树或者右子树
+     * 稳定性：不稳定的排序
+     * @param array
+     */
+    public static void quickSort(int[] array) {
+        sort(array, 0, array.length-1);
+    }
+
+    public static void insertSort2(int[] array, int start, int end) {
+        for (int i = 1; i <= end; i++) {
+            int tmp = array[i];
+            int j = i-1;
+            for (; j >= start ; j--) {
+                if(array[j] > tmp) {
+                    array[j+1] = array[j];
+                }else {
+                    //array[j+1] = tmp;  只要j回退的时候，遇到了 比tmp小的元素就结束这次的比较
+                    break;
+                }
+            }
+            //j回退到了 小于0 的地方
+            array[j+1] = tmp;
+        }
+    }
+
+    public static void sort(int[] array, int left, int right) {
+        if(left >= right) {
+            return;
+        }
+        //0、如果区间内的数据，在排序的过程当中，小于某个范围了，可以使用直接插入排序  0  1  2 3
+//        if(right - left+1 <= 1400) {
+//            //使用直接插入排序
+//            insertSort2(array, left, right);
+//            return;
+//        }
+
+        //1、找基准之前，我们找到中间大小的值-使用三数取中法
+//        int midValIndex = findMidValIndex(array, left, right);
+//        swap(array, midValIndex, left);
+
+        int pivot = partition(array, left, right);// 基准
+        sort(array, left, pivot-1);
+        sort(array, pivot+1, right);
+    }
+
+    private static int findMidValIndex(int[] array,int start,int end) {
+        int mid = start + ((end - start) >>> 1);
+        if(array[start] < array[end]) {
+            if(array[mid] < array[start]) {
+                return start;
+            }else if(array[mid] > array[end]) {
+                return end;
+            }else {
+                return mid;
+            }
+        }else {
+            if(array[mid] > array[start]) {
+                return start;
+            }else if(array[mid] < array[end]) {
+                return end;
+            }else {
+                return mid;
+            }
+        }
+    }
+
+    /**
+     * 寻找基准值(挖坑法)
+     *     当然还有 Hoare法 和 前后遍历法 , 了解即可.
+     * 注意: 以后面试的时候, 80%的情况之下都是写 挖坑法 !
+     *     挖坑法 和 Hoare法 找到的基准值前面的数据的顺序有一些不同!
+     *
+     * @param array
+     * @param start
+     * @param end
+     * @return
+     */
+    private static int partition(int[] array,int start,int end) {
+        int tmp = array[start];// 假设基准值是它
+        while (start < end) {
+            while (start < end && array[end] >= tmp) { // 没有等于就会陷入死循环
+                end--;
+            }
+            //end下标就遇到了 < tmp的值
+            array[start] = array[end];
+            while (start < end && array[start] <= tmp) { // 没有等于同样也会陷入死循环
+                start++;
+            }
+            //start下标就遇到了 > tmp的值
+            array[end] = array[start];
+        }
+        array[start] = tmp;
+        return start;
+    }
+
     public static void main(String[] args) {
         //int[] array = {12, 5, 18, 10, 4, 2};
         int[] array = {12, 5, 9, 34, 6, 8, 33, 56, 89, 0, 7, 4, 22, 55, 77};
 //        shellSort(array);
 //        selectSort2(array);
 //        heapSort(array);
-        bubbleSort2(array);
+//        bubbleSort2(array);
+        quickSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
