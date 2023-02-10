@@ -25,7 +25,7 @@ public class TimeTest {
 //        TestSort.shellSort(array);
 //        TestSort.selectSort(array);
 //        TestSort.heapSort(array);
-        TestSort.quickSort(array);
+        TestSort.quickSort2(array);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
@@ -56,14 +56,14 @@ public class TimeTest {
          * 得出原因: 数据是有序的, 并且只有左子树或者右子树, 深度非常深, 递归次数太多, 超多当前栈空间!
          *     而且看的不仅仅是数据的大小, 而是栈帧的大小, 包括函数的其他信息和参数等!
          *
-         * 所以, 快速排序要进行下一步优化!
+         * 所以, 快速排序要进行下一步优化---使用三数取中法!
          */
         TestSort.quickSort(array);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
     public static void main(String[] args) {
-        test1(100_0000);
+        test1(10_0000);
 //        test2(10_0000);
     }
 }

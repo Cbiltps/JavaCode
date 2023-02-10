@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Stack;
 
 /**
  * Created with IntelliJ IDEA.
@@ -234,6 +235,7 @@ public class TestSort {
     }
 
     /**
+     * 快速排序(递归版本)
      * 时间复杂度：
      *     最好【每次可以均匀的分割待排序序列】：O(N*logn)
      *     最坏：数据有序 或者逆序的情况 O(N^2)
@@ -244,10 +246,10 @@ public class TestSort {
      * @param array
      */
     public static void quickSort(int[] array) {
-        sort(array, 0, array.length-1);
+        quickSortInternal(array, 0, array.length-1);
     }
 
-    public static void insertSort2(int[] array, int start, int end) {
+    public static void insertSortForQuickSort(int[] array, int start, int end) {
         for (int i = 1; i <= end; i++) {
             int tmp = array[i];
             int j = i-1;
@@ -255,7 +257,7 @@ public class TestSort {
                 if(array[j] > tmp) {
                     array[j+1] = array[j];
                 }else {
-                    //array[j+1] = tmp;  只要j回退的时候，遇到了 比tmp小的元素就结束这次的比较
+                    //array[j+1] = tmp; 把这段代码写到下面更好
                     break;
                 }
             }
@@ -264,42 +266,43 @@ public class TestSort {
         }
     }
 
-    public static void sort(int[] array, int left, int right) {
+    public static void quickSortInternal(int[] array, int left, int right) {
         if(left >= right) {
             return;
         }
-        //0、如果区间内的数据，在排序的过程当中，小于某个范围了，可以使用直接插入排序  0  1  2 3
-//        if(right - left+1 <= 1400) {
-//            //使用直接插入排序
-//            insertSort2(array, left, right);
-//            return;
-//        }
 
-        //1、找基准之前，我们找到中间大小的值-使用三数取中法
-//        int midValIndex = findMidValIndex(array, left, right);
-//        swap(array, midValIndex, left);
+        //优化2: 如果区间内的数据，在排序的过程当中，小于某个范围了，可以使用直接插入排序
+        if(right - left + 1 <= 1_0000) { // 假如是10个元素, 按照数组下标计算个数, 9 - 0 = 9, 但是有10个元素, 所以结果+1就代表10个元素.
+            //使用直接插入排序
+            insertSortForQuickSort(array, left, right);
+            return;
+        }
+
+        //优化1: 找基准之前(默认基准)，我们找到中间大小的值---使用三数取中法
+        int midValIndex = findMidValIndex(array, left, right);
+        swap(array, midValIndex, left);
 
         int pivot = partition(array, left, right);// 基准
-        sort(array, left, pivot-1);
-        sort(array, pivot+1, right);
+        quickSortInternal(array, left, pivot-1);
+        quickSortInternal(array, pivot+1, right);
     }
 
-    private static int findMidValIndex(int[] array,int start,int end) {
-        int mid = start + ((end - start) >>> 1);
+    private static int findMidValIndex(int[] array, int start, int end) {
+        int mid = start + ((end - start) >>> 1);// 相当于是(a+b)/2, 加括号是因为"+"的优先级比">>>"高!
         if(array[start] < array[end]) {
             if(array[mid] < array[start]) {
                 return start;
-            }else if(array[mid] > array[end]) {
+            } else if (array[mid] > array[end]) {
                 return end;
-            }else {
+            } else {
                 return mid;
             }
-        }else {
+        } else {
             if(array[mid] > array[start]) {
                 return start;
-            }else if(array[mid] < array[end]) {
+            } else if (array[mid] < array[end]) {
                 return end;
-            }else {
+            } else {
                 return mid;
             }
         }
@@ -307,7 +310,7 @@ public class TestSort {
 
     /**
      * 寻找基准值(挖坑法)
-     *     当然还有 Hoare法 和 前后遍历法 , 了解即可.
+     *     当然还有 Hoare法 和 前后遍历法, 了解即可.
      * 注意: 以后面试的时候, 80%的情况之下都是写 挖坑法 !
      *     挖坑法 和 Hoare法 找到的基准值前面的数据的顺序有一些不同!
      *
@@ -334,6 +337,162 @@ public class TestSort {
         return start;
     }
 
+    /**
+     * 快速排序(非递归版本)
+     * @param array
+     */
+    public static void quickSort2(int[] array) {
+        Stack<Integer> stack = new Stack<>();
+        int left = 0;
+        int right = array.length-1;
+
+        int pivot = partition(array, left, right);
+
+        if(pivot > left+1) {
+            //左边有2个元素
+            stack.push(left);
+            stack.push(pivot-1);
+        }
+        if(pivot < right-1) {
+            //右边有2个元素
+            stack.push(pivot+1);
+            stack.push(right);
+        }
+
+        while (!stack.isEmpty()) {
+            right = stack.pop();
+            left = stack.pop();
+
+            pivot = partition(array, left, right);
+
+            if(pivot > left+1) {
+                //左边有2个元素
+                stack.push(left);
+                stack.push(pivot-1);
+            }
+            if(pivot < right-1) {
+                //右边有2个元素
+                stack.push(pivot+1);
+                stack.push(right);
+            }
+        }
+    }
+
+    /**
+     * 有序合并数组(这个是归并排序的基础---每年都有公司会问)
+     * @param array1 有序的
+     * @param array2 有序的
+     * @return
+     */
+    public static int[] mergeArray(int[] array1, int[] array2) {
+        if (array1 == null && array2 == null) {
+            return null;
+        }
+        if (array1 == null) {
+            return array2;
+        }
+        if (array2 == null) {
+            return array1;
+        }
+
+        int k = 0;// tmp的数组下标
+        int[] tmp = new int[array1.length + array2.length];
+
+        int s1 = 0;
+        int e1 = array1.length - 1;
+
+        int s2 = 0;
+        int e2 = array2.length - 1;
+
+        while (s1 <= e1 && s2 <= e2) {
+            if(array1[s1] <= array2[s2]) {
+                tmp[k++] = array1[s1++];
+                //k++;
+                //s1++;
+            }else {
+                tmp[k++] = array2[s2++];
+            }
+        }
+
+        // 第一个数组还有元素, 第二个数组走完
+        while (s1 <= e1) {
+            tmp[k++] = array1[s1++];
+        }
+
+        // 第二个数组还有元素, 第一个数组走完
+        while (s2 <= e2) {
+            tmp[k++] = array2[s2++];
+        }
+
+        return tmp;
+    }
+
+    /**
+     * 归并排序：
+     * 时间复杂度：O(N*logN)
+     *     分解后可以理解为抽象出一个满二叉树, 其层数为O(logN);
+     *     每层不管分成多少组, 每层合并数组的时间都是O(N), 因为数组总元素没有变化。
+     *
+     * 空间复杂度：O(N)
+     *     合并的时候会申请一个临时的数组空间, 而临时的数组空间最坏情况下就是待排序数组的空间既O(N)!
+     *
+     * 稳定性：稳定的排序
+     * 如果判断 array[s1] <= array[s2] 不取等号, 那么就是不稳定的排序!
+     *
+     * 学过的排序中只有3个是稳定的: 冒泡 插入 归并
+     * @param array
+     */
+    public static void mergeSort(int[] array) {
+        mergeSortInternal(array, 0, array.length-1);
+    }
+
+    private static void mergeSortInternal(int[] array, int low, int high) {
+        if(low >= high) {
+            return;
+        }
+
+//        int mid = (low+high) >>> 1;
+        int mid = low + ((high-low) >>> 1);
+        // 左边分解
+        mergeSortInternal(array, low, mid);
+        // 右边分解
+        mergeSortInternal(array, mid+1, high);
+        // 合并
+        merge(array, low, mid, high);
+    }
+
+    private static void merge(int[] array, int low, int mid, int high) {
+        int[] tmp = new int[high - low + 1];
+        int k = 0;
+
+        int s1 = low;
+        int e1 = mid;
+
+        int s2 = mid + 1;
+        int e2 =  high;
+
+        while (s1 <= e1 && s2 <= e2) {
+            if(array[s1] <= array[s2]) {
+                tmp[k++] = array[s1++];
+            }else {
+                tmp[k++] = array[s2++];
+            }
+        }
+
+        while (s1 <= e1) {
+            tmp[k++] = array[s1++];
+        }
+
+        while (s2 <= e2) {
+            tmp[k++] = array[s2++];
+        }
+
+        // 拷贝tmp数组的元素并放入原来的数组array当中
+        for (int i = 0; i < k; i++) {
+            array[i+low] = tmp[i];
+        }
+    }
+
     public static void main(String[] args) {
         //int[] array = {12, 5, 18, 10, 4, 2};
         int[] array = {12, 5, 9, 34, 6, 8, 33, 56, 89, 0, 7, 4, 22, 55, 77};
@@ -341,7 +500,21 @@ public class TestSort {
 //        selectSort2(array);
 //        heapSort(array);
 //        bubbleSort2(array);
-        quickSort(array);
+//        quickSort2(array);
+        mergeSort(array);
         System.out.println(Arrays.toString(array));
+    }
+
+    /**
+     * 测试mergeArray函数
+     * @param args
+     */
+    public static void main1(String[] args) {
+        int[] array1 = {1, 2, 4, 5, 7};
+        int[] array2 = {4, 6, 8,};
+        int[] array3 = {0, 0};
+        System.out.println(Arrays.toString(mergeArray(array1, array2)));
+        System.out.println(Arrays.toString(mergeArray(array1, array3)));
+
     }
 }
