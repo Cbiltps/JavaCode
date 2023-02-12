@@ -461,6 +461,13 @@ public class TestSort {
         merge(array, low, mid, high);
     }
 
+    /**
+     *合并两个有序数组并拷贝到原来的数组
+     * @param array
+     * @param low
+     * @param mid
+     * @param high
+     */
     private static void merge(int[] array, int low, int mid, int high) {
         int[] tmp = new int[high - low + 1];
         int k = 0;
@@ -493,18 +500,43 @@ public class TestSort {
         }
     }
 
-
-
+    /**
+     * 非递归实现归并排序
+     *     难度在于要确定归并的区间, 所以要寻找left, mid, right三者的规律!
+     * @param array
+     */
+    public static void mergeSort2(int[] array) {
+        int nums = 1;// 每组的数据个数
+        while (nums < array.length) {
+            // 每组不管有几个数据, 都要对数组整体遍历一般, 并确定归并区间
+            for (int i = 0; i < array.length; i += nums*2) {
+                int left = i;
+                int mid = left + nums - 1;
+                // 防止mid越界
+                if(mid >= array.length) {
+                    mid = array.length - 1;
+                }
+                int right = mid+nums;
+                // 防止right越界
+                if(right >= array.length) {
+                    right = array.length - 1;
+                }
+                // 下标确定之后, 进行合并
+                merge(array, left, mid, right);
+            }
+            nums *= 2;
+        }
+    }
 
     public static void main(String[] args) {
-        //int[] array = {12, 5, 18, 10, 4, 2};
+//        int[] array = {12, 5, 18, 10, 4, 2};
         int[] array = {12, 5, 9, 34, 6, 8, 33, 56, 89, 0, 7, 4, 22, 55, 77};
 //        shellSort(array);
 //        selectSort2(array);
 //        heapSort(array);
 //        bubbleSort2(array);
 //        quickSort2(array);
-        mergeSort(array);
+        mergeSort2(array);
         System.out.println(Arrays.toString(array));
     }
 
