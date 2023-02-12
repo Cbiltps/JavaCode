@@ -11,15 +11,15 @@ import java.util.Stack;
 public class TestSort {
     /**
      * 直接插入排序:
-     * 时间复杂度：O(N^2)-逆序的时候
-     *      最好的情况是O(N): 对于直接插入排序来说，最好的情况就是数据有序的时候;
-     *      根据这个结论，推导出另一个结论：对于直接插入排序来说，数据越有序，越快。
+     * 时间复杂度: O(N^2)-逆序的时候
+     *      最好的情况是O(N): 对于直接插入排序来说, 最好的情况就是数据有序的时候;
+     *      根据这个结论, 推导出另一个结论: 对于直接插入排序来说, 数据越有序, 越快。
      *      所以: 直接插入排序可以用于排序的优化!
-     * 空间复杂度：O(1)
-     * 稳定性：稳定的
+     * 空间复杂度: O(1)
+     * 稳定性: 稳定的
      *
-     * 一个稳定的排序，可以实现为不稳定的排序
-     * 但是一个本身就不稳定的排序，是不可以变成稳定的排序的
+     * 一个稳定的排序, 可以实现为不稳定的排序
+     * 但是一个本身就不稳定的排序, 是不可以变成稳定的排序的
      *
      * 经常使用在  数据量不多  且 整体数据 趋于有序的时候!
      * @param array
@@ -62,8 +62,8 @@ public class TestSort {
     }
 
     /**
-     * 时间复杂度[和增量有关系的]：O(n^1.3 - n^1.5)
-     * 空间复杂度：O(1)
+     * 时间复杂度[和增量有关系的]: O(n^1.3 - n^1.5)
+     * 空间复杂度: O(1)
      * 稳定性: 不稳定的
      * 如何简单判断是否稳定: 看在比较的过程当中, 是否发生了跳跃式的交换;
      *     如果发生了跳跃式的交换, 那么就是不稳定的排序!
@@ -106,9 +106,9 @@ public class TestSort {
 
     /**
      * 选择排序
-     * 时间复杂度：O(N^2)
-     * 空间复杂度：O(1)
-     * 稳定性：不稳定的排序
+     * 时间复杂度: O(N^2)
+     * 空间复杂度: O(1)
+     * 稳定性: 不稳定的排序
      * @param array 待排序序列
      */
     public static void selectSort(int[] array) {
@@ -176,10 +176,10 @@ public class TestSort {
     }
 
     /**
-     * 时间复杂度：O(N + N * log N) ≈ O(N * log N)
+     * 时间复杂度: O(N + N * log N) ≈ O(N * log N)
      *     随着 O(N * log N) 的增大, O(N) 对整体的影响越来越小, 所以 O(N) 省略!
-     * 空间复杂度：O(1)
-     * 稳定性：不稳定
+     * 空间复杂度: O(1)
+     * 稳定性: 不稳定
      * 注意:面试的时候 写堆排序 就是写 调整的过程(shiftDown)!
      * @param array
      */
@@ -197,9 +197,9 @@ public class TestSort {
 
     /**
      * 冒泡排序
-     * 时间复杂度：O(N^2)
-     * 空间复杂度：O(1)
-     * 稳定性：稳定的排序
+     * 时间复杂度: O(N^2)
+     * 空间复杂度: O(1)
+     * 稳定性: 稳定的排序
      * @param array
      */
     public static  void bubbleSort(int[] array) {
@@ -214,9 +214,9 @@ public class TestSort {
 
     /**
      * 冒泡排序(优化后)
-     * 时间复杂度：有序O(n) ~ 逆序O(N^2)
-     * 空间复杂度：O(1)
-     * 稳定性：稳定的排序
+     * 时间复杂度: 有序O(n) ~ 逆序O(N^2)
+     * 空间复杂度: O(1)
+     * 稳定性: 稳定的排序
      * @param array
      */
     public static void bubbleSort2(int[] array) {
@@ -236,13 +236,13 @@ public class TestSort {
 
     /**
      * 快速排序(递归版本)
-     * 时间复杂度：
-     *     最好【每次可以均匀的分割待排序序列】：O(N*logn)
-     *     最坏：数据有序 或者逆序的情况 O(N^2)
-     * 空间复杂度：
-     *     最好：O(logn)
-     *     最坏：O(n) 只有左子树或者右子树
-     * 稳定性：不稳定的排序
+     * 时间复杂度: 
+     *     最好【每次可以均匀的分割待排序序列】: O(N*logn)
+     *     最坏: 数据有序 或者逆序的情况 O(N^2)
+     * 空间复杂度: 
+     *     最好: O(logn)
+     *     最坏: O(n) 只有左子树或者右子树
+     * 稳定性: 不稳定的排序
      * @param array
      */
     public static void quickSort(int[] array) {
@@ -271,14 +271,14 @@ public class TestSort {
             return;
         }
 
-        //优化2: 如果区间内的数据，在排序的过程当中，小于某个范围了，可以使用直接插入排序
+        //优化2: 如果区间内的数据, 在排序的过程当中, 小于某个范围了, 可以使用直接插入排序
         if(right - left + 1 <= 1_0000) { // 假如是10个元素, 按照数组下标计算个数, 9 - 0 = 9, 但是有10个元素, 所以结果+1就代表10个元素.
             //使用直接插入排序
             insertSortForQuickSort(array, left, right);
             return;
         }
 
-        //优化1: 找基准之前(默认基准)，我们找到中间大小的值---使用三数取中法
+        //优化1: 找基准之前(默认基准), 我们找到中间大小的值---使用三数取中法
         int midValIndex = findMidValIndex(array, left, right);
         swap(array, midValIndex, left);
 
@@ -319,7 +319,7 @@ public class TestSort {
      * @param end
      * @return
      */
-    private static int partition(int[] array,int start,int end) {
+    private static int partition(int[] array, int start, int end) {
         int tmp = array[start];// 假设基准值是它
         while (start < end) {
             while (start < end && array[end] >= tmp) { // 没有等于就会陷入死循环
@@ -428,15 +428,15 @@ public class TestSort {
     }
 
     /**
-     * 归并排序：
-     * 时间复杂度：O(N*logN)
+     * 归并排序: 
+     * 时间复杂度: O(N*logN)
      *     分解后可以理解为抽象出一个满二叉树, 其层数为O(logN);
      *     每层不管分成多少组, 每层合并数组的时间都是O(N), 因为数组总元素没有变化。
      *
-     * 空间复杂度：O(N)
+     * 空间复杂度: O(N)
      *     合并的时候会申请一个临时的数组空间, 而临时的数组空间最坏情况下就是待排序数组的空间既O(N)!
      *
-     * 稳定性：稳定的排序
+     * 稳定性: 稳定的排序
      * 如果判断 array[s1] <= array[s2] 不取等号, 那么就是不稳定的排序!
      *
      * 学过的排序中只有3个是稳定的: 冒泡 插入 归并
@@ -528,15 +528,60 @@ public class TestSort {
         }
     }
 
+    /**
+     * 计数排序: 
+     * 时间复杂度: O(N)
+     * 空间复杂度: O(M) 
+     *     M:代表当前数据的范围900 - 999
+     * 稳定性: 当前代码是不稳定的, 但是本质是稳定的
+     *
+     * 一般适用于 有n个数, 数据范围是0-n之间的
+     * @param array
+     */
+    public static void countingSort(int[] array) {
+        // 1. 找到最大值和最小值
+        int maxVal = array[0];
+        int minVal = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if(array[i] < minVal) {
+                minVal = array[i];
+            }
+            if(array[i] > maxVal) {
+                maxVal = array[i];
+            }
+        }
+
+        //2. 创建计数数组, 并标记数据出现的次数
+        int[] count = new int[maxVal-minVal+1];// 内容默认都是0
+        // 统计array数组当中, 每个数据出现的次数
+        for (int i = 0; i < array.length; i++) {
+            int indexForCountingArray = array[i];
+            //为了空间的合理使用 这里需要index-minVal, 防止出现范围区间的情况(923-900)!
+            count[indexForCountingArray-minVal]++;
+        }
+
+        // 3.遍历计数数组, 把数据写回TargetArray中
+        int indexForOriginalArray = 0;
+        for (int i = 0; i < count.length; i++) {
+            while (count[i] > 0) {
+                //这里一定要加minVal, 因为不一定就是i出现了count[i]次
+                array[indexForOriginalArray] = i + minVal;
+                count[i]--;//拷贝一个之后, 次数也就少一个
+                indexForOriginalArray++;// 拷贝一个之后, 下标得向后移动
+            }
+        }
+    }
+
     public static void main(String[] args) {
 //        int[] array = {12, 5, 18, 10, 4, 2};
-        int[] array = {12, 5, 9, 34, 6, 8, 33, 56, 89, 0, 7, 4, 22, 55, 77};
+        int[] array = {12, 5, 9, 34, 6, 8, 0, 33, 56, 89, 0, 7, 4, 22, 55, 77};
 //        shellSort(array);
 //        selectSort2(array);
 //        heapSort(array);
 //        bubbleSort2(array);
 //        quickSort2(array);
-        mergeSort2(array);
+//        mergeSort2(array);
+        countingSort(array);
         System.out.println(Arrays.toString(array));
     }
 
