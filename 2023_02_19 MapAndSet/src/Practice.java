@@ -7,14 +7,18 @@ import java.util.*;
  * Date: 2023-02-20
  * Time: 13:42
  */
-public class Questions {
+
+
+
+public class Practice {
+
     /**
      * 给定10W个数据, 统计每个数据出现的次数
      * @param array
      * @return
      */
     //key是关键字 value是出现的次数
-    public static Map<Integer, Integer> NumOfData(int[] array) {
+    public static Map<Integer, Integer> numOfData(int[] array) {
         Map<Integer, Integer> map = new HashMap<>();
         //判断array中的元素, 是否在map当中, 如果不在放入的元素val就是1; 在就是在原来的基础上+1.49
         for (int x : array) {
@@ -33,7 +37,7 @@ public class Questions {
      * @param array
      * @return
      */
-    public static Set<Integer> DataDeduplication(int[] array) {
+    public static Set<Integer> dataDeduplication(int[] array) {
         Set<Integer> set = new HashSet<>();
 //        for (int i = 0; i < array.length-1; i++) {
 //            set.add(array[i]);
@@ -44,7 +48,7 @@ public class Questions {
         return set;
     }
 
-    public static int FirstDuplicateData (int[] array) {
+    public static int firstDuplicateData (int[] array) {
         Set<Integer> set = new HashSet<>();
         for (int x : array) {
             if (set.contains(x)) {
@@ -66,13 +70,13 @@ public class Questions {
             array[i] = random.nextInt(1000);
         }
 
-//        Map<Integer, Integer> map = NumOfData(array);
+//        Map<Integer, Integer> map = numOfData(array);
 //        System.out.println(map);
 //
-//        Set<Integer> set = DataDeduplication(array);
+//        Set<Integer> set = dataDeduplication(array);
 //        System.out.println(set);
 //
-        int result = FirstDuplicateData(array);
+        int result = firstDuplicateData(array);
         System.out.println(result);
     }
 }
