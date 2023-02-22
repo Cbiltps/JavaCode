@@ -178,6 +178,14 @@ public class InterviewQuestions {
     /**
      * 692. 前K个高频单词(这道题非常的重量级, 非常绕, 复习的时候多看看, 笔记在搜索二叉树的前面[Map和Set的面试题])
      * https://leetcode.cn/problems/top-k-frequent-words/description/
+     *
+     * 特别注意题目中的两个条件:
+     * A:返回的答案应该按单词出现频率由高到低排序。
+     * B:如果不同的单词有相同出现频率，按字典顺序排序。
+     * 要满足两个条件是不容易的, 他们是互相矛盾的,
+     * 满足A, B不满足, 反之也是.
+     * 所以要按代码中的方式巧妙解决, 恶心至极!
+     *
      * @param words
      * @param k
      * @return
