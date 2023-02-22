@@ -175,7 +175,80 @@ public class InterviewQuestions {
         }
     }
 
-    public static void main(String[] args) {
+    /**
+     * 692. 前K个高频单词(这道题非常的重量级, 非常绕, 复习的时候多看看, 笔记在搜索二叉树的前面[Map和Set的面试题])
+     * https://leetcode.cn/problems/top-k-frequent-words/description/
+     * @param words
+     * @param k
+     * @return
+     */
+    public static List<String> topKFrequent(String[] words, int k) {
+        HashMap<String, Integer> map = new HashMap<>();
+        // 1、用map统计每个单词出现的次数
+        for (String s : words) {
+            if(map.get(s) == null) {
+                map.put(s, 1);
+            }else {
+                int val = map.get(s);
+                map.put(s, val+1);
+            }
+        }
+
+        // 2、建立一个大小为K的小根堆
+        PriorityQueue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>(k, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                if(o1.getValue().compareTo(o2.getValue()) == 0) { // 出现次数相同的时候
+                    return o2.getKey().compareTo(o1.getKey());// 对于单词(字典)来说又是大根堆
+                }
+                return o1.getValue() - o2.getValue();
+            }
+        });
+
+        // 3、遍历Map, 将Map中的Map.Entry<String, Integer>按规则放入PriorityQueue<Map.Entry<String,Integer>>
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            // 这里提醒一下, 前k次放置的时候, 也要注意放置的顺序
+            // 所以, Override的compare方法要加下面的if语句!
+            /*
+                if(o1.getValue().compareTo(o2.getValue()) == 0) {
+                    return o2.getKey().compareTo(o1.getKey());
+                }
+             */
+            if(minHeap.size() < k) {
+                minHeap.offer(entry);
+            }else {
+                // 说明堆中, 已经放满了K个元素, 需要看 堆顶元素 的数据和 当前的数据 的大小关系
+                Map.Entry<String, Integer> top = minHeap.peek();
+                // 判断频率是否相同, 如果相同, 比较单词(字典)的大小, 单词小的入堆
+                if(top.getValue().compareTo(entry.getValue()) == 0) { // 判断频率是否相同, 等于0既相同
+                    if(top.getKey().compareTo(entry.getKey()) > 0) { // 比较单词(字典)的大小, 单词小的入堆
+                        minHeap.poll();
+                        minHeap.offer(entry);
+                    }
+                } else {
+                    if(top.getValue().compareTo(entry.getValue()) < 0) {
+                        minHeap.poll();
+                        minHeap.offer(entry);
+                    }
+                }
+            }
+        }
+
+        // System.out.println(minHeap);
+        List<String> ret = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+            Map.Entry<String, Integer> top = minHeap.poll();
+            ret.add(top.getKey());
+        }
+        Collections.reverse(ret);// 逆置
+        return ret;
+    }
+
+    /**
+     * 坏键盘打字的main函数
+     * @param args
+     */
+    public static void main1(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String expected = scanner.nextLine();
@@ -183,5 +256,12 @@ public class InterviewQuestions {
             searchBadKeyboard(expected, actual);
             System.out.println();
         }
+    }
+
+    public static void main(String[] args) {
+        //String[] worlds = {"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"};
+        String[] worlds = {"i", "love", "leetcode", "i", "love", "coding"};
+        List<String> ret = topKFrequent(worlds,3);
+        System.out.println(ret);
     }
 }
